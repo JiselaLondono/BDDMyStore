@@ -1,4 +1,3 @@
 package com.pruebasofka.mystore.interactions;
 
-public class Prueba {
-}
+public class Prueba {}
