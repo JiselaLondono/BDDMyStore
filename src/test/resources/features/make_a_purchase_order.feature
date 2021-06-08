@@ -7,3 +7,4 @@ Feature: Make a purchase order in MyStore
 
 Scenario: Successful purchase order
   Given that Jisela is a customer with an active MyStore account
+   When she chooses the dresses she wants to buy
