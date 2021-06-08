@@ -9,6 +9,8 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
+import net.serenitybdd.screenplay.questions.Text;
+import net.serenitybdd.screenplay.targets.Target;
 
 public class SelectProduct implements Interaction {
 
@@ -24,6 +26,9 @@ public class SelectProduct implements Interaction {
     actor.attemptsTo(Move.toTheElement(PRODUCT.of(product.getName())));
     actor.attemptsTo(Click.on(PRODUCT_OPTION.of(product.getName(), option)));
     if (option.equals("More")) {
+
+      actor.remember("Price", getPrice(actor, PRICE));
+
       actor.attemptsTo(
           Enter.theValue(String.valueOf(product.getQuantity())).into(QUANTITY),
           SelectFromOptions.byVisibleText(product.getSize()).from(SIZE),
@@ -39,5 +44,9 @@ public class SelectProduct implements Interaction {
   public SelectProduct bbbb(String option) {
     this.option = option;
     return this;
+  }
+
+  public static Double getPrice(Actor actor, Target target) {
+    return Double.parseDouble(Text.of(target).viewedBy(actor).asString().replace("$", ""));
   }
 }

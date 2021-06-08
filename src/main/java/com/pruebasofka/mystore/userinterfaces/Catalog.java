@@ -21,4 +21,6 @@ public class Catalog {
       Target.the("Add to cart").locatedBy("//p[@id='add_to_cart']/button");
   public static final Target PRODUCT_BUTTON =
       Target.the("Product button").locatedBy("//div[@class='button-container']//*[@title='{0}']");
+
+  public static final Target PRICE = Target.the("Price").located(By.id("our_price_display"));
 }

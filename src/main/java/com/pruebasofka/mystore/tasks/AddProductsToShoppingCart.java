@@ -27,6 +27,9 @@ public class AddProductsToShoppingCart implements Task {
       actor.attemptsTo(
           SelectCategory.named(product.getCategory()).andSubcategory(product.getSubcategory()),
           SelectProduct.aaaaa(product).bbbb("More"));
+
+      product.setPrice(actor.recall("Price"));
+
       if (productCounter < products.size()) {
         actor.attemptsTo(Click.on(PRODUCT_BUTTON.of("Continue shopping")));
       }

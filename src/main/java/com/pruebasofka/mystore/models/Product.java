@@ -7,7 +7,7 @@ import java.util.Map;
 public class Product {
 
   private String name;
-  private String price;
+  private Double price;
   private String category;
   private String subcategory;
   private int quantity;
@@ -31,11 +31,11 @@ public class Product {
     this.name = name;
   }
 
-  public String getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(String price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 
