@@ -26,9 +26,7 @@ public class SelectProduct implements Interaction {
     actor.attemptsTo(Move.toTheElement(PRODUCT.of(product.getName())));
     actor.attemptsTo(Click.on(PRODUCT_OPTION.of(product.getName(), option)));
     if (option.equals("More")) {
-
       actor.remember("Price", getPrice(actor, PRICE));
-
       actor.attemptsTo(
           Enter.theValue(String.valueOf(product.getQuantity())).into(QUANTITY),
           SelectFromOptions.byVisibleText(product.getSize()).from(SIZE),

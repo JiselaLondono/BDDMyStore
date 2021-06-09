@@ -1,4 +1,4 @@
 id;filterId;name;category;subcategory;quantity;size;color
 1;dresses;Blouse;Tops;Blouses;2;M;Black
-2;dresses;Printed Chiffon Dress;Dresses;Summer Dresses;1;S;Yellow
-3;dresses;Printed Dress;Dresses;Casual Dresses;3;L;Orange
+2;dresses1;Printed Chiffon Dress;Dresses;Summer Dresses;1;S;Yellow
+3;dresses1;Printed Dress;Dresses;Casual Dresses;3;L;Orange

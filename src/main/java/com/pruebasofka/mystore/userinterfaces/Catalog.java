@@ -19,8 +19,12 @@ public class Catalog {
       Target.the("Color").locatedBy("//ul[@id='color_to_pick_list']//a[@name='{0}']");
   public static final Target ADD_TO_CART =
       Target.the("Add to cart").locatedBy("//p[@id='add_to_cart']/button");
-  public static final Target PRODUCT_BUTTON =
-      Target.the("Product button").locatedBy("//div[@class='button-container']//*[@title='{0}']");
+  public static final Target PROCEED_CHECKOUT_BUTTON =
+      Target.the("Button to proceed to checkout")
+          .locatedBy("//a[@title='Proceed to checkout']/span");
+  public static final Target CONTINUE_SHOPPING_BUTTON =
+      Target.the("Button to continue shopping")
+          .locatedBy("//span[@title='Continue shopping']/span");
 
   public static final Target PRICE = Target.the("Price").located(By.id("our_price_display"));
 }

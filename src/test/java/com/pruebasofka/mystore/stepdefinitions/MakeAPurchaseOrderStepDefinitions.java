@@ -6,8 +6,11 @@ import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.pruebasofka.mystore.exceptions.InvalidMessageException;
 import com.pruebasofka.mystore.models.Product;
+import com.pruebasofka.mystore.questions.OrderInformation;
 import com.pruebasofka.mystore.questions.TheMessage;
+import com.pruebasofka.mystore.questions.TheOrderAmount;
 import com.pruebasofka.mystore.tasks.*;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -62,13 +65,29 @@ public class MakeAPurchaseOrderStepDefinitions {
   }
 
   @When("she chooses to pay by {string} and confirms her order")
-  public void choosePaymentMethod(String paymentMethod){
+  public void choosePaymentMethod(String paymentMethod) {
     this.paymentMethod = paymentMethod;
     theActorInTheSpotlight().attemptsTo(SelectPaymentMethod.named(paymentMethod));
   }
 
   @Then("she should see the following message {string}")
-  public void succesfulMessage(String message){
-    theActorInTheSpotlight().should(seeThat(TheMessage.forThePaymentMethod(paymentMethod), equalTo(message)));
+  public void succesfulMessage(String message) {
+    theActorInTheSpotlight()
+        .should(
+            seeThat(TheMessage.forThePaymentMethod(paymentMethod), equalTo(message))
+                .orComplainWith(InvalidMessageException.class, "MENSAJE ERRADO"));
+  }
+
+  @Then("she should see that the total cost of the order is correct")
+  public void validateOrderAmount() {
+    theActorInTheSpotlight()
+        .should(
+            seeThat(TheOrderAmount.correspondsToTheProducts(products))
+                .orComplainWith(InvalidMessageException.class, "MENSAJE ERRADO"));
+  }
+
+  @Then("she should see that the order was recorded in her account's order history")
+  public void validateOrder() {
+    theActorInTheSpotlight().should(seeThat(OrderInformation.isCorrect().lalalka(paymentMethod)));
   }
 }
