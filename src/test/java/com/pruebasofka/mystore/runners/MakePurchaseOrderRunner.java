@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-    features = "src/test/resources/features/make_a_purchase_order.feature",
+    features = "src/test/resources/features/make_purchase_order.feature",
     glue = "com.pruebasofka.mystore.stepdefinitions",
     snippets = CucumberOptions.SnippetType.CAMELCASE)
-public class MakeAPurchaseOrderRunner {}
+public class MakePurchaseOrderRunner {}
