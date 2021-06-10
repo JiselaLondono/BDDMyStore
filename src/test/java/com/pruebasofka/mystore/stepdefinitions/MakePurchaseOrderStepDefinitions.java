@@ -4,6 +4,7 @@ import static com.pruebasofka.mystore.utils.Constants.MY_STORE_URL;
 import static com.pruebasofka.mystore.utils.Generate.getProductsData;
 import static com.pruebasofka.mystore.utils.enums.ErrorMessages.AMOUNT_PRESENTED_ERROR;
 import static com.pruebasofka.mystore.utils.enums.ErrorMessages.EXPECTED_MESSAGE_ERROR;
+import static com.pruebasofka.mystore.utils.enums.ErrorMessages.INVALID_ORDER_DATA_ERROR;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
@@ -11,10 +12,11 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.pruebasofka.mystore.exceptions.InvalidAmountException;
 import com.pruebasofka.mystore.exceptions.InvalidMessageException;
+import com.pruebasofka.mystore.exceptions.InvalidOrderInformationException;
 import com.pruebasofka.mystore.models.Product;
-import com.pruebasofka.mystore.questions.OrderInformation;
 import com.pruebasofka.mystore.questions.TheMessageOfTheOrder;
 import com.pruebasofka.mystore.questions.TheOrderAmount;
+import com.pruebasofka.mystore.questions.TheOrderInformation;
 import com.pruebasofka.mystore.tasks.AddProductsToShoppingCart;
 import com.pruebasofka.mystore.tasks.ConfirmSummary;
 import com.pruebasofka.mystore.tasks.Login;
@@ -34,7 +36,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.thucydides.core.annotations.Managed;
 import org.openqa.selenium.WebDriver;
 
-public class MakeAPurchaseOrderStepDefinitions {
+public class MakePurchaseOrderStepDefinitions {
 
   private List<Product> products;
   private String paymentMethod;
@@ -97,7 +99,13 @@ public class MakeAPurchaseOrderStepDefinitions {
   }
 
   @Then("she should see that the order was recorded in her account's order history")
-  public void validateOrder() {
-    theActorInTheSpotlight().should(seeThat(OrderInformation.isCorrect().lalalka(paymentMethod)));
+  public void validateOrderHistory() {
+    theActorInTheSpotlight()
+        .should(
+            seeThat(
+                    TheOrderInformation.isRecordedInTheHistory()
+                        .withThePaymentMethod(paymentMethod))
+                .orComplainWith(
+                    InvalidOrderInformationException.class, INVALID_ORDER_DATA_ERROR.getMessage()));
   }
 }

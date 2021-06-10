@@ -14,4 +14,4 @@ Scenario: Successful purchase order
   And she pays the order by 'check'
   Then she should see the following message 'Your order on My Store is complete.'
   And she should see that the total cost of the order is correct
-  #And she should see that the order was recorded in her account's order history
+  And she should see that the order was recorded in her account's order history

@@ -16,12 +16,10 @@ public final class Payment {
   public static final Target PAYMENT_AMOUNT =
       Target.the("Total payment amount value of the order")
           .locatedBy("//span[@class='price']/strong");
-
-  public static final Target CONFIRMATION_MESSAGE_CHECK =
-      Target.the("Confirmation message check").locatedBy("//div[@class='box order-confirmation']");
-
-  public static final Target CONFIRMATION_MESSAGE_BANK =
-      Target.the("Confirmation message bank").locatedBy("//div[@class='box']");
+  public static final Target ORDER_DATA_FOR_CHECK =
+      Target.the("Order information for check").locatedBy("//div[@class='box order-confirmation']");
+  public static final Target ORDER_DATA_FOR_BANK_WIRE =
+      Target.the("Order information for bank wire").locatedBy("//div[@class='box']");
 
   private Payment() {}
 }
