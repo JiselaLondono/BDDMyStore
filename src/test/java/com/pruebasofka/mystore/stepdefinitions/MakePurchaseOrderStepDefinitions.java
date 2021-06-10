@@ -4,7 +4,7 @@ import static com.pruebasofka.mystore.utils.Constants.MY_STORE_URL;
 import static com.pruebasofka.mystore.utils.Generate.getProductsData;
 import static com.pruebasofka.mystore.utils.enums.ErrorMessages.AMOUNT_PRESENTED_ERROR;
 import static com.pruebasofka.mystore.utils.enums.ErrorMessages.EXPECTED_MESSAGE_ERROR;
-import static com.pruebasofka.mystore.utils.enums.ErrorMessages.INVALID_ORDER_DATA_ERROR;
+import static com.pruebasofka.mystore.utils.enums.ErrorMessages.ORDER_DATA_ERROR;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
@@ -106,6 +106,6 @@ public class MakePurchaseOrderStepDefinitions {
                     TheOrderInformation.isRecordedInTheHistory()
                         .withThePaymentMethod(paymentMethod))
                 .orComplainWith(
-                    InvalidOrderInformationException.class, INVALID_ORDER_DATA_ERROR.getMessage()));
+                    InvalidOrderInformationException.class, ORDER_DATA_ERROR.getMessage()));
   }
 }

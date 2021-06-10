@@ -1,7 +1,9 @@
 package com.pruebasofka.mystore.questions;
 
 import static com.pruebasofka.mystore.userinterfaces.GeneralOptions.BACK_TO_ORDERS;
-import static com.pruebasofka.mystore.userinterfaces.OrderHistory.*;
+import static com.pruebasofka.mystore.userinterfaces.OrderHistory.ORDER;
+import static com.pruebasofka.mystore.userinterfaces.OrderHistory.PAYMENT_TEXT;
+import static com.pruebasofka.mystore.userinterfaces.OrderHistory.TOTAL_PRICE_TEXT;
 import static com.pruebasofka.mystore.utils.Constants.AMOUNT;
 import static com.pruebasofka.mystore.utils.Constants.ORDER_CODE;
 import static com.pruebasofka.mystore.utils.Constants.PESO_SIGN;
@@ -35,11 +37,13 @@ public class TheOrderInformation implements Question<Boolean> {
         ORDER.resolveAllFor(actor).subList(0, ORDER.resolveAllFor(actor).size());
     for (WebElementFacade webElementFacade : orders) {
       if (webElementFacade.getText().equals(actor.recall(ORDER_CODE))) {
-        LOGGER.info(String.format(ORDER_FOUND_MESSAGE.getMessage(), actor.recall(ORDER_CODE)));
+        LOGGER.info(
+            String.format(ORDER_FOUND_MESSAGE.getMessage(), actor.recall(ORDER_CODE).toString()));
         return validatePrice(actor, webElementFacade) && validatePayment(webElementFacade);
       }
     }
-    LOGGER.error(String.format(ORDER_NOT_FOUND_ERROR.getMessage(), actor.recall(ORDER_CODE)));
+    LOGGER.error(
+        String.format(ORDER_NOT_FOUND_ERROR.getMessage(), actor.recall(ORDER_CODE).toString()));
     return false;
   }
 

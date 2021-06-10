@@ -10,7 +10,7 @@ public enum ErrorMessages {
       "The total price of the order presented in the registry is not correct. Expected: %s, obtained: %s."),
   PAYMENT_METHOD_ERROR("The payment method indicated in the registration is incorrect."),
   ORDER_NOT_FOUND_ERROR("The %s order was not found within the user's order history."),
-  INVALID_ORDER_DATA_ERROR(
+  ORDER_DATA_ERROR(
       "There are inconsistencies with the order information recorded in the order history.");
 
   private String message;

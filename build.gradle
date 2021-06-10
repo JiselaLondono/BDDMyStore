@@ -49,7 +49,6 @@ dependencies {
     implementation "net.serenity-bdd:serenity-cucumber5:$rootProject.ext.serenityCucumberVersion"
     implementation "net.serenity-bdd:serenity-screenplay-webdriver:$rootProject.ext.serenityVersion"
     implementation "net.serenity-bdd:serenity-reports:$rootProject.ext.serenityVersion"
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2'
 }
 
 compileJava.dependsOn 'googleJavaFormat'

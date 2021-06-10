@@ -1,4 +1,7 @@
 id;filterId;name;category;subcategory;quantity;size;color
 1;blouses and dresses;Blouse;Tops;Blouses;2;M;Black
-2;blouses and dresses;Printed Chiffon Dress;Dresses;Summer Dresses;1;S;Yellow
+2;blouses and dresses;Printed Chiffon Dress;Dresses;Summer Dresses;1;S;Green
 3;blouses and dresses;Printed Dress;Dresses;Casual Dresses;3;L;Orange
+4;blouses and dresses;Printed Dress;Dresses;Evening Dresses;2;L;Pink
+5;t-shirts and blouses;Faded Short Sleeve T-shirts;Tops;T-shirts;3;L;Blue
+6;t-shirts and blouses;Blouse;Tops;Blouses;3;M;White
