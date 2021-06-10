@@ -9,6 +9,7 @@ import net.serenitybdd.screenplay.targets.Target;
 import org.openqa.selenium.interactions.Actions;
 
 public class Move implements Interaction {
+
   private Target target;
 
   public Move(Target target) {

@@ -2,6 +2,7 @@ package com.pruebasofka.mystore.tasks;
 
 import static com.pruebasofka.mystore.userinterfaces.Catalog.CONTINUE_SHOPPING_BUTTON;
 import static com.pruebasofka.mystore.userinterfaces.Catalog.PROCEED_CHECKOUT_BUTTON;
+import static com.pruebasofka.mystore.utils.Constants.UNIT_PRICE;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
@@ -15,6 +16,7 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.conditions.Check;
 import net.serenitybdd.screenplay.waits.WaitUntil;
+import net.thucydides.core.annotations.Step;
 
 public class AddProductsToShoppingCart implements Task {
 
@@ -24,6 +26,7 @@ public class AddProductsToShoppingCart implements Task {
     this.products = products;
   }
 
+  @Step("{0} chooses the products to buy and adds them to the shopping cart")
   @Override
   public <T extends Actor> void performAs(T actor) {
     int productCounter = 0;
@@ -31,8 +34,8 @@ public class AddProductsToShoppingCart implements Task {
       productCounter++;
       actor.attemptsTo(
           SelectCategory.named(product.getCategory()).andSubcategory(product.getSubcategory()),
-          SelectProduct.aaaaa(product).bbbb("More"));
-      product.setPrice(actor.recall("Price"));
+          SelectProduct.indicatedIn(product));
+      product.setPrice(actor.recall(UNIT_PRICE));
       actor.attemptsTo(
           Check.whether(productCounter < products.size())
               .andIfSo(

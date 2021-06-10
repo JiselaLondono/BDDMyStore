@@ -1,6 +1,6 @@
 package com.pruebasofka.mystore.questions;
 
-import static com.pruebasofka.mystore.userinterfaces.GeneralOptions.NEXT_2;
+import static com.pruebasofka.mystore.userinterfaces.GeneralOptions.BACK_TO_ORDERS;
 import static com.pruebasofka.mystore.userinterfaces.OrderHistory.*;
 
 import com.pruebasofka.mystore.interactions.GetOrderReference;
@@ -17,7 +17,7 @@ public class OrderInformation implements Question<Boolean> {
   @Override
   public Boolean answeredBy(Actor actor) {
     actor.attemptsTo(GetOrderReference.fromThePaymentMethod(paymentMethod));
-    actor.attemptsTo(Click.on(NEXT_2.of("Back to orders")));
+    actor.attemptsTo(Click.on(BACK_TO_ORDERS.of("Back to orders")));
 
     List<WebElementFacade> orders =
         ORDER.resolveAllFor(actor).subList(0, ORDER.resolveAllFor(actor).size());

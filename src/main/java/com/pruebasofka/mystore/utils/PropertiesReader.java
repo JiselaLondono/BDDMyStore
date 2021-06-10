@@ -1,5 +1,7 @@
 package com.pruebasofka.mystore.utils;
 
+import static com.pruebasofka.mystore.utils.enums.ErrorMessages.RESOURCE_NOT_FOUND_ERROR;
+
 import com.pruebasofka.mystore.exceptions.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,8 +15,7 @@ public class PropertiesReader {
       FileInputStream file = new FileInputStream(path);
       return getProperties(file);
     } catch (IOException e) {
-      throw new FileNotFoundException(
-          String.format("FILE_NOT_FOUND_ERROR.getMessage()", path) + e.getMessage(), e);
+      throw new FileNotFoundException(RESOURCE_NOT_FOUND_ERROR.getMessage(), e);
     }
   }
 

@@ -1,17 +1,26 @@
 package com.pruebasofka.mystore.stepdefinitions;
 
+import static com.pruebasofka.mystore.utils.Constants.MY_STORE_URL;
 import static com.pruebasofka.mystore.utils.Generate.getProductsData;
+import static com.pruebasofka.mystore.utils.enums.ErrorMessages.AMOUNT_PRESENTED_ERROR;
+import static com.pruebasofka.mystore.utils.enums.ErrorMessages.EXPECTED_MESSAGE_ERROR;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.pruebasofka.mystore.exceptions.InvalidAmountException;
 import com.pruebasofka.mystore.exceptions.InvalidMessageException;
 import com.pruebasofka.mystore.models.Product;
 import com.pruebasofka.mystore.questions.OrderInformation;
-import com.pruebasofka.mystore.questions.TheMessage;
+import com.pruebasofka.mystore.questions.TheMessageOfTheOrder;
 import com.pruebasofka.mystore.questions.TheOrderAmount;
-import com.pruebasofka.mystore.tasks.*;
+import com.pruebasofka.mystore.tasks.AddProductsToShoppingCart;
+import com.pruebasofka.mystore.tasks.ConfirmSummary;
+import com.pruebasofka.mystore.tasks.Login;
+import com.pruebasofka.mystore.tasks.PayOrder;
+import com.pruebasofka.mystore.tasks.SelectDeliveryAddress;
+import com.pruebasofka.mystore.tasks.SelectShippingOption;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,7 +39,8 @@ public class MakeAPurchaseOrderStepDefinitions {
   private List<Product> products;
   private String paymentMethod;
 
-  @Managed private WebDriver herBrowser;
+  @Managed(driver = "chrome")
+  WebDriver herBrowser;
 
   @Before
   public void setStage() {
@@ -38,44 +48,44 @@ public class MakeAPurchaseOrderStepDefinitions {
   }
 
   @Given("that {word} is a customer with an active MyStore account")
-  public void thatJiselaIsACustomerWithAnActiveMyStoreAccount(String actor) {
-    theActorCalled(actor).wasAbleTo(Open.url("http://automationpractice.com"));
-    theActorInTheSpotlight().wasAbleTo(Login.onMyStore());
+  public void loginOnMyStore(String actor) {
+    theActorCalled(actor).wasAbleTo(Open.url(MY_STORE_URL), Login.onMyStore());
   }
 
-  @When("she chooses the {word} she wants to buy")
-  public void chooseProducts(String filter) throws IOException {
-    products = getProductsData(filter);
+  @When("she chooses the {string} that she wants to buy")
+  public void chooseProducts(String productsFilter) throws IOException {
+    products = getProductsData(productsFilter);
     theActorInTheSpotlight().attemptsTo(AddProductsToShoppingCart.ofTheList(products));
   }
 
-  @When("she confirm her purchase")
+  @When("she confirms the summary of the chosen products")
   public void confirmSummary() {
-    theActorInTheSpotlight().attemptsTo(ConfirmPurchaseSummary.ok());
+    theActorInTheSpotlight().attemptsTo(ConfirmSummary.ofTheSelectedProducts());
   }
 
   @When("she chooses the delivery address {string}")
-  public void chooseAddress(String address) {
+  public void chooseDeliveryAddress(String address) {
     theActorInTheSpotlight().attemptsTo(SelectDeliveryAddress.named(address));
   }
 
-  @When("she chooses a shipping option for her address {string}")
+  @When("she chooses {string} as the shipping option for her order")
   public void chooseShipping(String shippingType) {
     theActorInTheSpotlight().attemptsTo(SelectShippingOption.named(shippingType));
   }
 
-  @When("she chooses to pay by {string} and confirms her order")
-  public void choosePaymentMethod(String paymentMethod) {
+  @When("she pays the order by {string}")
+  public void payOrder(String paymentMethod) {
     this.paymentMethod = paymentMethod;
-    theActorInTheSpotlight().attemptsTo(SelectPaymentMethod.named(paymentMethod));
+    theActorInTheSpotlight().attemptsTo(PayOrder.by(paymentMethod));
   }
 
   @Then("she should see the following message {string}")
-  public void succesfulMessage(String message) {
+  public void validateSuccessfulMessage(String message) {
     theActorInTheSpotlight()
         .should(
-            seeThat(TheMessage.forThePaymentMethod(paymentMethod), equalTo(message))
-                .orComplainWith(InvalidMessageException.class, "MENSAJE ERRADO"));
+            seeThat(TheMessageOfTheOrder.paidBy(paymentMethod), equalTo(message))
+                .orComplainWith(
+                    InvalidMessageException.class, EXPECTED_MESSAGE_ERROR.getMessage()));
   }
 
   @Then("she should see that the total cost of the order is correct")
@@ -83,7 +93,7 @@ public class MakeAPurchaseOrderStepDefinitions {
     theActorInTheSpotlight()
         .should(
             seeThat(TheOrderAmount.correspondsToTheProducts(products))
-                .orComplainWith(InvalidMessageException.class, "MENSAJE ERRADO"));
+                .orComplainWith(InvalidAmountException.class, AMOUNT_PRESENTED_ERROR.getMessage()));
   }
 
   @Then("she should see that the order was recorded in her account's order history")
